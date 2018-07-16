@@ -13,7 +13,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.0.4",
 	"appid": "wxf154fee309716b03",
-	"projectname": "weixinmp",
+	"projectname": "wxmp",
 	"isGameTourist": false,
 	"condition": {
 		"search": {

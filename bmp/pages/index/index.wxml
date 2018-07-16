@@ -3,7 +3,7 @@
 
 
  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 同意授权登录 </button>
     <block wx:else>
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
@@ -12,37 +12,5 @@
   <view class="usermotto">
     <text class="user-motto">{{motto}}</text>
   </view>
-   <view class="img-box">
-       <image style="background-color: #eeeeee;" mode="widthFix" src="../../resource/order-ungroup.png"></image>
-
-  </view>
-     <view class="img-box">
-       <image style="background-color: #eeeeee;" mode="widthFix" src="../../resource/index.jpg"></image>
-       
-  </view>
-     <view class="img-box">
-       <image style="background-color: #eeeeee;" mode="widthFix" src="../../resource/project.jpg"></image>
-       
-  </view>
-   <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view> <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view> <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view> <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view> <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view> <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view> <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
-
-
-    <view id="green" class="scroll-view-item bc_green">1111111</view>
-    <view id="red"  class="scroll-view-item bc_red">222222222222</view>
-    <view id="yellow" class="scroll-view-item bc_yellow">4444444</view>
-    <view id="blue" class="scroll-view-item bc_blue">5555555555</view>
+  
 </view>
