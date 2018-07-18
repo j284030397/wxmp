@@ -1,0 +1,128 @@
+<!--pages/goods/detail.wxml-->
+<!-- <import src="/pages/template/toast.wxml"/> -->
+
+<scroll-view scroll-y="true" class="scroll-view-y" scroll-with-animation="true" scroll-top="{{scrollTop}}" lower-threshold="50" bindscrolltolower="scrolltolower" style="height: {{windowHeight-50}}px;">
+
+<swiper autoplay="true" circular="true"> 
+	<block>
+	<swiper-item>  
+	    <image src="/pages/images/1.jpg" mode="aspectFill" ></image>   
+	</swiper-item>
+	</block>
+</swiper>
+
+<view class="goods-item bg-fff">
+	<view class="pull-left g-left">
+		<text class="goods-price">¥100</text>
+		<text class="origin-price">¥200</text>
+		<view class="goods-sale">
+			已团211件·5人团
+		</view>
+	</view>
+	<view class="icon-share text-center pull-right">
+		<image src='/resource/share.png'></image>
+		<view class="share-text">分享</view>
+	</view>
+	<button open-type="share" class="share-btn pull-right"></button>
+	<view class="clearfix"></view>
+	<view class="goods-title bg-fff">欧莱雅恒放溢彩持色哑光遮瑕轻垫霜红胖子气垫持久不脱妆</view>
+	<view class="goods-brief bg-fff">S M L XL</view>
+</view>
+
+<view class="server" bindtap="showServer" data-statu="open">
+	<image src="/resource/yes.png"></image><text>全场包邮</text>
+	<image src="/resource/yes.png"></image><text>7天退换</text>
+	<image src="/resource/yes.png"></image><text>全场48小时发货</text>
+	<image src="/resource/yes.png"></image><text>假一赔十</text>
+	<view class="pull-right right"><image src="/resource/left-b.png"></image></view>
+</view>
+<import src="/wxParse/wxParse.wxml"/>
+
+<view>
+	<view class="bg-fff mt-20 p-20">小伙伴正在开团</view>
+	<block wx:for="{{groupList}}" wx:key="unique">
+	<view class="pull-left group-item bg-fff" bindtap="joinGroup" data-id="{{item.oid}}">
+		<view class="pull-left user-img">
+			<image src="{{item.avatarUrl}}" mode="aspectFill"></image>
+		</view>
+		<view class="group-user pull-left">
+			<view class="user-name">{{item.nickName}}</view>
+			<view class="left-time">还差{{goodsDetail.groupNum-1-item.leftNum}}人，剩余{{item.leftTimeStr}}</view>
+		</view>
+		<view class="pull-right btn">去参团</view>
+	</view>
+	<view class="clearfix"></view>
+	</block>
+</view>
+
+<view class="goods-desc bg-fff"><view>商品详情</view></view>
+<view class="wxParse">
+	<template is="wxParse" data="{{wxParseData:goodsIntro.nodes}}"/>
+</view>
+</scroll-view>
+
+<view class="footer">
+	<view class="index" bindtap="goHome">
+		<image src="/resource/index.png" mode="aspectFill"></image>
+		<view class="mt-10">首页</view>
+	</view>
+	<view class="collect" bindtap="collect" data-status="{{is_collect}}">
+		<image src="{{is_collect ? '/resource/collected.png':'/resource/collect.png'}}" mode="aspectFill"></image>
+		<view class="mt-10">收藏</view>
+	</view>
+	<view class="buy-group pull-right" bindtap="showModal" data-gprice="100" data-statu="open" data-type="group">
+		<view>¥100</view>
+		<view class="mt-10">一键开团</view>
+	</view>
+	<view class="buy-only pull-right" bindtap="showModal" data-price="200" data-statu="open" data-type="only">
+		<view>¥200</view>
+		<view class="mt-10">单独购买</view>
+	</view>
+</view>
+
+<view class="drawer_screen" bindtap="showModal" data-statu="close" wx:if="{{showModalStatus}}"></view>
+<view class="modal" animation="{{animationData}}" wx:if="{{showModalStatus}}" >
+	<text class="modal-close pull-right" bindtap="showModal" data-statu="close">x</text>
+	<view class="clearfix"></view>
+	<view class="modal-title">
+		<view class="goods-img"><image src="/pages/images/1.jpg" mode="aspectFit"></image></view>
+		<view class="goods-price">¥{{goodsPrice}}</view>
+	</view>
+	<view class="modal-body">
+		<view class="prop">
+			<view class="prop-name">尺寸</view>
+			<!-- <block>
+				<text class="{{propValue[pid].pname==sel_1&&propValue[1].name==sel1 ?'selected':''}}" data-pid="1" data-pname="sel_1" data-name="sel1" bindtap="selectProp">S</text>
+        <text class="{{propValue[pid].pname==sel_2&&propValue[2].name==sel2 ?'selected':''}}" data-pid="2" data-pname="sel_1" data-name="sel2" bindtap="selectProp">M</text>
+			</block> -->
+      <block wx:for="{{item.value}}" wx:key="unique" wx:for-item="prop" wx:for-index="ind">
+				 <text class="{{name == prop.ind ?'selected':''}}" data-pid="{{index}}" data-name="{{prop.ind}}" bindtap="selectProp">{{item.name}}{{prop.ind}}</text> 
+			</block>
+		</view>
+	</view>
+	<view class="number pull-left">
+		<text class="pull-left" style="padding-left: 24rpx;">数量</text>
+		<text class="plus pull-right" bindtap="plus">十</text>
+		<text class="buy-value pull-right">{{num}}</text>
+		<text class="minus pull-right" bindtap="minus">一</text>
+	</view>
+	<view class="modal-footer">
+		<view class="btn" bindtap="goToBuy">确定</view>
+	</view>
+</view>
+
+<view class="drawer_screen" bindtap="showServer" data-statu="close" wx:if="{{showServer}}"></view>
+<view class="modal" animation="{{animationData}}" wx:if="{{showServer}}" >
+	<text class="modal-close pull-right" bindtap="showServer" data-statu="close">x</text>
+	<view class="clearfix"></view>
+	<view class="modal-title">
+		<view class="text-center">
+			<text class="">服务说明</text>
+		</view>
+	</view>
+	<view class="modal-body">
+
+	</view>
+</view>
+<template is="toast" data="{{toast:toast}}"/>
+

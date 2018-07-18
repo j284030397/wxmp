@@ -1,0 +1,7 @@
+<template name="toast">
+<view class="toast">
+	<view class="toast-mask" animation="{{toast.toastAnimationData}}">
+		<view class="toast-titile">test</view>
+	</view>
+</view>
+</template>

@@ -1,0 +1,17 @@
+label {
+  display: inline-block;
+  min-width: 100rpx;
+  margin-right: 20rpx;
+}
+form{
+  width: 100%;
+}
+.picker-text {
+  margin-left: 20rpx;
+  position: relative;
+}
+input{border: 1px solid #ccc; background: #fff;}
+.page-body{padding:20rpx;}
+.page-section{ margin-bottom: 30rpx;}
+.page-section-title{ padding: 10rpx 0;}
+.weui-input{ height: 1.6rem; line-height: 1.6rem; padding-left: 8rpx;}

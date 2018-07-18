@@ -16,7 +16,10 @@ Page({
    //
    // that.getMemberLogin();
    //生成订单
-    that.createOrder("订单一", 200, 123, 222, 1, 100,"3,4,5");
+   // that.createOrder("订单一", 200, 123, 222, 1, 100,"3,4,5");
+    that.getOrderList();
+
+
     // wx.request({
     //   url: 'https://www.xbang8.com/wxmp/showView', //仅为示例，并非真实的接口地址
     //   data: {

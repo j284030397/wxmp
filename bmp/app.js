@@ -16,15 +16,15 @@ App({
   timeout: 0,
   onLaunch: function () {
     // 获取用户信息
-    wx.getUserInfo({
-      success: res => {
-        console.log(res.userInfo)
-        this.globalData.userInfo = res.userInfo;
-        if (this.userInfoReadyCallback) {
-          this.userInfoReadyCallback(res)
-        }
-      }
-    })
+    // wx.getUserInfo({
+    //   success: res => {
+    //     console.log(res.userInfo)
+    //     this.globalData.userInfo = res.userInfo;
+    //     if (this.userInfoReadyCallback) {
+    //       this.userInfoReadyCallback(res)
+    //     }
+    //   }
+    // })
 
      wx.clearStorageSync();
      wx.removeStorageSync('mydata');
@@ -32,22 +32,25 @@ App({
     //缓存
     try {
       let mydata = wx.getStorageSync('mydata');
-
-      console.log(mydata);
-
       if (mydata) {
+        console.log('找到身份认证缓存');
         const nowTime = new Date().getTime();
+        console.log('判断是否过期失效');
         if (nowTime - mydata.time < 6 * 60 * 60 * 1000) { //缓存6小时
+          console.log('还未超过6小时，有效');
           this.globalData.token = mydata.token;
           this.globalData.userInfo = mydata.userInfo;
           this.globalData.openid = mydata.openid;
           this.globalData.memberId = mydata.memberId;
+          console.log(this.globalData);
 
         } else {
+          console.log('已经失效，清除缓存重新登录');
           wx.clearStorageSync()
           this.toLogin();
         }
       } else {
+        console.log('未找到身份认证缓存，重新登录');
         this.toLogin();
       }
     } catch (e) {
@@ -65,7 +68,7 @@ App({
         if (loginres.code) {//登录凭证 
           console.log(loginres.code);
           that.globalData.code = loginres.code;
-          that.getUserInfo(fn);
+         // that.getUserInfo(fn);
         }
       }
     })
@@ -75,6 +78,7 @@ App({
     //2、调用获取用户信息接口 
     wx.getUserInfo({
       success: function (res) {
+        console.log('获取用户信息成功');
         console.log(res.encryptedData);
         console.log(res.iv);
         that.globalData.userInfo = res.userInfo;
@@ -88,6 +92,7 @@ App({
     })
   },
   getOpenId: function (code, encryptedData, iv, fn) {
+    console.log('获取openId和应用token');
     var that = this;
     wx.request({
       method: 'POST',
@@ -104,7 +109,7 @@ App({
       success: function (res) {
         console.log(res);
         if (res.data.success == true) {
-          console.log('获取openid')
+          console.log('获取openid成功');
           let openid = res.data.data.userInfo.openId;
           that.globalData.openid = openid;
           that.globalData.token = res.data.data.userInfo.token;
@@ -115,9 +120,9 @@ App({
             openid: that.globalData.openid,
             time: new Date().getTime(),
           }
+          console.log('缓存认证信息');
           wx.setStorageSync('mydata', mydata);
           fn && fn();
-          console.log('获取token');
           console.log(that.globalData);
 
           // if (JSON.stringify(that.globalData.userInfo) === '{}') {
@@ -154,9 +159,78 @@ App({
         if (res.data.success == true) {
           let data = res.data.data;
           console.log(data);
-        
+        }
 
-        
+      }
+    })
+  },
+  //查询订单列表
+  getOrderList: function (fn) {
+    let that = this;
+    let shopId = 222;
+    let orderType = 1;
+    let customerId = '123';
+    //let status = 0;
+    let createTime = '2018-07-16 15:44:53';
+
+    wx.request({
+      method: 'GET',
+      url: this.globalData.serverPath + '/yzbOrder/listdata',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + that.globalData.token
+      },
+      data: {
+        shopId: shopId,
+        orderType: orderType,
+        customerId: customerId,
+       // status: status,
+        createTime: createTime
+      },
+      success: function (res) {
+        console.log(res);
+        if (res.data.success == true) {
+          let data = res.data.data;
+          console.log(data);
+
+
+
+        }
+
+      }
+    })
+  },
+  //查询订单详情
+  getOrderInfo: function (fn) {
+    let that = this;
+    let shopId = 222;
+    let orderType = 1;
+    let customerId = '123';
+    //let status = 0;
+    let createTime = '2018-07-16 15:44:53';
+
+    wx.request({
+      method: 'GET',
+      url: this.globalData.serverPath + '/yzbOrder/listdata',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + that.globalData.token
+      },
+      data: {
+        shopId: shopId,
+        orderType: orderType,
+        customerId: customerId,
+        // status: status,
+        createTime: createTime
+      },
+      success: function (res) {
+        console.log(res);
+        if (res.data.success == true) {
+          let data = res.data.data;
+          console.log(data);
+
+
+
         }
 
       }
