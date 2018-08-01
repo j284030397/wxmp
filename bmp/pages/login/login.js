@@ -20,7 +20,7 @@ Page({
       hasUserInfo: true
     });
     wx.navigateTo({
-      url: '../goods/detail'
+      url: '../index/index'
     })
 
   },

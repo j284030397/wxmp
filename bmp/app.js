@@ -10,6 +10,13 @@ App({
     encryptedData: '',
     secret: '',
     serverPath: 'https://www.xbang8.com/wxmp',
+    // ptRuleId:'',
+    // goodsId:'',
+    // shopId:'',
+    // customerId:'',
+    // ptName:'',
+    // address:'',
+    // linkMan:'',
   },
   loginTimer: null,
   userTimer: null,
@@ -110,6 +117,7 @@ App({
         console.log(res);
         if (res.data.success == true) {
           console.log('获取openid成功');
+          
           let openid = res.data.data.userInfo.openId;
           that.globalData.openid = openid;
           that.globalData.token = res.data.data.userInfo.token;
@@ -325,6 +333,159 @@ App({
 
       }
     })
-  }
+  },
+  getGoodsList: function (fn) {
+    let that = this;
+    let shopId = 222;
+    let orderType = 1;
+    let customerId = '123';
+    //let status = 0;
+    let createTime = '2018-07-16 15:44:53';
+    console.log(that.globalData.serverPath)
+    wx.request({
+      method: 'GET',
+      url: that.globalData.serverPath + '/yzbGoodsInfo/listdata',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + that.globalData.token
+      },
+      data: {
+        shopId: shopId,
+        orderType: orderType,
+        customerId: customerId,
+        // status: status,
+        createTime: createTime
+      },
+      success: function (res) {
+        console.log(res);
+        if (res.data.success == true) {
+          let data = res.data.data;
+          console.log(data);
+        }
 
+      }
+    })
+  },
+//查询订单列表
+  getOrderList: function (fn) {
+    let that = this;
+    let shopId = 222;
+    let orderType = 1;
+    let customerId = '123';
+    //let status = 0;
+    let createTime = '2018-07-16 15:44:53';
+
+    wx.request({
+      method: 'GET',
+      url: this.globalData.serverPath + '/yzbOrder/listdata',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + that.globalData.token
+      },
+      data: {
+        shopId: shopId,
+        orderType: orderType,
+        customerId: customerId,
+       // status: status,
+        createTime: createTime
+      },
+      success: function (res) {
+        console.log(res);
+        if (res.data.success == true) {
+          let data = res.data.data;
+          console.log(data);
+
+
+
+        }
+
+      }
+    })
+  },
+  //查询订单列表
+  getOrderList: function (fn) {
+    let that = this;
+    let shopId = 222;
+    let orderType = 1;
+    let customerId = '123';
+    //let status = 0;
+    let createTime = '2018-07-16 15:44:53';
+
+    wx.request({
+      method: 'GET',
+      url: this.globalData.serverPath + '/yzbOrder/listdata',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + that.globalData.token
+      },
+      data: {
+        shopId: shopId,
+        orderType: orderType,
+        customerId: customerId,
+        // status: status,
+        createTime: createTime
+      },
+      success: function (res) {
+        console.log(res);
+        if (res.data.success == true) {
+          let data = res.data.data;
+          console.log(data);
+
+
+
+        }
+
+      }
+    })
+  },
+  showModal: function (that) {
+    var animation = wx.createAnimation({
+      duration: 200
+    })
+    animation.opacity(0).rotateX(-100).step();
+    that.setData({
+      animationData: animation.export()
+    })
+    setTimeout(function () {
+      animation.opacity(1).rotateX(0).step();
+      that.setData({
+        animationData: animation
+      });
+    }.bind(that), 200)
+  },
+  redirect: function (url, param) {
+    wx.navigateTo({
+      url: '/pages/' + url + '?' + param
+    })
+  },
+  showToast: function (that, title) {
+    var toast = {};
+    toast.toastTitle = title;
+    that.setData({
+      toast: toast
+    })
+    var animation = wx.createAnimation({
+      duration: 100
+    })
+    animation.opacity(0).rotateY(-100).step();
+    toast.toastStatus = true;
+    toast.toastAnimationData = animation.export()
+    that.setData({
+      toast: toast
+    })
+    setTimeout(function () {
+      animation.opacity(1).rotateY(0).step();
+      toast.toastAnimationData = animation
+      that.setData({
+        toast: toast
+      });
+    }.bind(that), 100)
+    // 定时器关闭 
+    setTimeout(function () {
+      toast.toastStatus = false
+      that.setData({
+        toast: toast
+      });
+    }.bind(that), 2000);
+  }
 })

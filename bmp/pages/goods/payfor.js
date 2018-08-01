@@ -16,6 +16,7 @@ Page({
       name: 'S',
       pname: '大小',
     },
+    address: false,
 
   },
 
@@ -23,9 +24,36 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    //console.log(app.mydata.goodsId+app.num);
+    var address = this.data.address = wx.getStorageSync('address')
+    this.setData({
+      address: address,
+      mydata: app.mydata,
+      goodsNum: app.num,
+    })
   },
-
+  getWxAddress: function () {
+    var self = this;
+    wx.chooseAddress({
+      success: function (res) {
+        self.data.address = {
+          userName: res.userName,
+          telNumber: res.telNumber,
+          provinceName: res.provinceName,
+          cityName: res.cityName,
+          countyName: res.countyName,
+          detailInfo: res.detailInfo
+        };
+        wx.setStorage({
+          key: "address",
+          data: self.data.address
+        })
+        self.setData({
+          address: self.data.address
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -98,48 +126,32 @@ Page({
     }
     // JSON.stringify(jsonobj)
     var data = {
-      pid: app.groupPid,
-      isGroup: app.buyType,
-      gid: app.goodsInfo.id,
-      goodsNum: app.num,
-      address: JSON.stringify(this.data.address),
-      totalPrice: app.goodsPrice * app.num,
-      goodsProp: JSON.stringify(app.propValue)
+      ptRuleId: 9,
+      goodsId: app.mydata.goodsId,
+      shopId: app.shopId,
+      customerId: 105,
+      ptName: app.mydata.ptName,
+      address: JSON.stringify(this.data.address.detailInfo),
+      //totalPrice: app.mydata.goodsPrice * app.num,
+      linkMan: JSON.stringify(this.data.address.userName),
+      phone: JSON.stringify(this.data.address.telNumber),
+      City: JSON.stringify(this.data.address.cityName),
     }
     if (this.oid) {
       return;
     }
-    app.request.wxRequest({
-      url: 'create-orders',
+    console.log(data)
+    wx.request({
+      url: app.globalData.serverPath + '/mp/mpKaiTua',
       method: "POST",
       data: data,
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + app.globalData.token
+      },
       success: function (res) {
         var oid = self.oid = res;
-        app.request.wxRequest({
-          url: 'wx-pay',
-          data: { oid: res },
-          success: function (res) {
-            wx.requestPayment({
-              'timeStamp': res.timeStamp,
-              'nonceStr': res.nonceStr,
-              'package': res.package,
-              'signType': 'MD5',
-              'paySign': res.paySign,
-              'success': function (res) {
-                console.log(res)
-                if (data.isGroup == 1) { //拼团
-                  app.redirect('group/detail', 'id=' + oid)
-                } else {
-                  app.redirect('orders/index', 'id=3')
-                }
-              },
-              'fail': function (res) {
-                app.redirect('orders/index', 'id=1')
-                console.log(res)
-              }
-            })
-          }
-        })
+        console.log(res)
       }
     })
   },

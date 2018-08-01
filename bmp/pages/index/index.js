@@ -7,71 +7,85 @@ Page({
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    searchSongList: [],
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    isFromSearch: true,  
+    searchPageNum: 1, 
+    callbackcount: 3,  
+    searchLoading: false, 
+    searchLoadingComplete: false,
+    goodsId:'',
+    shopId:'',
+  },
+  // 下拉刷新回调接口
+  onPullDownRefresh: function () {
+    
+    wx.stopPullDownRefresh;
+  },
+  onReachBottom:function(){
+    console.log('加载更多');
+    this.getGoodsList();
   },
   //事件处理函数
-  bindViewTap: function() {
-    let that = app;
-   // that.getMemberLogin();
-   //
-   // that.getMemberLogin();
-   //生成订单
-   // that.createOrder("订单一", 200, 123, 222, 1, 100,"3,4,5");
-    that.getOrderList();
-
-
-    // wx.request({
-    //   url: 'https://www.xbang8.com/wxmp/showView', //仅为示例，并非真实的接口地址
-    //   data: {
-    //     x: '',
-    //     y: ''
-    //   },
-    //   header: {
-    //     'content-type': 'application/json' // 默认值
-    //   },
-    //   success: function (res) {
-    //     console.log(res.data)
-    //   }
-    // })
-
-    // wx.navigateTo({
-    //   url: '../logs/logs'
-    // })
+  showGoodsDetial: function (e) {
+    var goodsid = e.currentTarget.dataset.goodsid
+   // console.log(shopId),
+    // if (!gid) return;
+    //app.redirect('goods/detail', 'gid=' + gid)
+    wx.redirectTo({ url: '/pages/goods/detail?shopid=1&goodsid=' + goodsid})
+  },
+  onLaunch: function () {
+    
   },
   onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
+    this.getGoodsList();
+  },
+  click_b: function (options){
+    wx.scanCode({
+      success: (res) => {
+        console.log(res.result);
       }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      // wx.getUserInfo({
-      //   success: res => {
-      //     app.globalData.userInfo = res.userInfo
-      //     this.setData({
-      //       userInfo: res.userInfo,
-      //       hasUserInfo: true
-      //     })
-      //   }
-      // })
-    }
+    });
+    console.log("Path: " + options.scene);
   },
   getUserInfo: function(e) {
     console.log(e)
-    // app.globalData.userInfo = e.detail.userInfo
-    // this.setData({
-    //   userInfo: e.detail.userInfo,
-    //   hasUserInfo: true
-    // })
-  }
+  },
+  getGoodsList: function (fn) {
+    let that = this;
+    let shopId = 1;
+    let orderType = 1;
+    let customerId = '123';
+    //let status = 0;
+    let createTime = '2018-07-16 15:44:53';
+    //console.log(app.globalData.serverPath)
+    wx.request({
+      method: 'GET',
+      url: app.globalData.serverPath + '/yzbGoodsInfo/listdata',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + app.globalData.token
+      },
+      data: {
+        shopId: shopId,
+        orderType: orderType,
+        customerId: customerId,
+        // status: status,
+        createTime: createTime,
+        searchPageNum: that.data.searchPageNum,
+        callbackcount: that.data.callbackcount,
+      },
+      success: function (res) {
+       // console.log(res);
+        if (res.data.success == true) {
+          let data = res.data.data;
+          that.setData({
+            searchSongList: res.data.data,
+          })
+          //console.log(that.data.searchSongList.result[0]);
+        }
+
+      }
+    })
+  },
 })

@@ -1,16 +1,64 @@
-<!--index.wxml-->
-<view class="container">
+<!--pages/index/index.wxml-->
 
-
- <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 同意授权登录 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+<scroll-view scroll-y="true" class="scroll-view-y" scroll-with-animation="true" scroll-top="{{scrollTop}}" lower-threshold="50" bindscrolltolower="scrolltolower">
+<block>
+  <view class="goods-group" style="margin-top: 4rpx;">
+    <block wx:for="{{searchSongList.result}}" wx:key="unique"  data-data="{{item}}">
+      <view class="goods-item pull-left" bindtap="showGoodsDetial" data-goodsid="{{item.sid}}">
+        <image src="{{item.miniPic}}" mode="aspectFill"></image>
+        <view class="goods-title">{{item.gname}}</view>
+        <view class="pull-left" style="width: 100%;padding: 17px 12px;">
+          <view class="pull-left" style="line-height: 32px;">
+            <text class="goods-price">¥{{item.price}}</text>
+            <!-- <text class="goods-sale">已团{{item.saleNum}}{{item.unit}}</text> -->
+            <text class="goods-mprice">¥{{item.price}}</text>
+          </view>
+          <view class="pull-right" style="margin-right: 24px;">
+          <view wx:if="{{item.groupList.length>0}}" class="group-userImg">
+          <block wx:for="{{item.groupList}}" wx:key="unique" wx:for-index="idx" wx:for-item="val">
+            <image src="{{val.avatarUrl}}" mode="" class="{{idx==1?'two':''}}"></image>
+          </block>
+          </view>
+          <view class="btn text-center">去开团 <image src="/pages/images/arrow_right.png"></image></view>
+          </view>
+        </view>
+      </view>
+      <view class="clearfix"></view>
     </block>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+  <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>  
+  <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view> 
+</block>
+
+<!-- <view>
+  <view class="goods-group" style="margin-top: 14rpx;">
+    <view class="goods-item-2 bg-fff" bindtap="showGoodsDetial" data-id="{{id}}">
+      <image src="/pages/images/2.jpg" mode="aspectFit"></image>
+      <view class="goods-title">欧莱雅恒放溢彩持色哑光遮瑕轻垫霜红胖子气垫持久不脱妆</view>
+      <view style="padding-bottom: 8rpx;">
+        <view class="goods-price">
+          <text style="">¥</text>
+          150
+        </view>
+        <text class="goods-sale pull-right">已团1100件</text>
+      </view>
+    </view>
+    <view class="goods-item-2 bg-fff" bindtap="showGoodsDetial" data-id="{{id}}">
+      <image src="/pages/images/2.jpg" mode="aspectFit"></image>
+      <view class="goods-title">欧莱雅恒放溢彩持色哑光遮瑕轻垫霜红胖子气垫持久不脱妆</view>
+      <view style="padding-bottom: 8rpx;">
+        <view class="goods-price">
+          <text style="">¥</text>
+          150
+        </view>
+        <text class="goods-sale pull-right">已团100件</text>
+      </view>
+    </view>
+
   </view>
-  
-</view>
+</view> -->
+
+
+
+<!-- <template is="loading" data="{{loading:loading}}"/> -->
+</scroll-view>
