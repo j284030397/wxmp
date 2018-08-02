@@ -4,12 +4,12 @@
 <block>
   <view class="goods-group" style="margin-top: 4rpx;">
     <block wx:for="{{searchSongList.result}}" wx:key="unique"  data-data="{{item}}">
-      <view class="goods-item pull-left" bindtap="showGoodsDetial" data-goodsid="{{item.sid}}">
-        <image src="{{item.miniPic}}" mode="aspectFill"></image>
-        <view class="goods-title">{{item.gname}}</view>
+      <view class="goods-item pull-left" bindtap="showGoodsDetial" data-goodsid="{{item.goodsId}}">
+        <image src="{{rootPath}}{{item.imgUrl}}" mode="aspectFill"></image>
+        <view class="goods-title">{{item.goodsName}}</view>
         <view class="pull-left" style="width: 100%;padding: 17px 12px;">
           <view class="pull-left" style="line-height: 32px;">
-            <text class="goods-price">¥{{item.price}}</text>
+            <text class="goods-price">¥{{item.tprice}}</text>
             <!-- <text class="goods-sale">已团{{item.saleNum}}{{item.unit}}</text> -->
             <text class="goods-mprice">¥{{item.price}}</text>
           </view>

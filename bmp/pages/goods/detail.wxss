@@ -44,7 +44,7 @@ swiper{height: 750rpx;}
 .footer>view{display: inline-block;text-align: center;height: 42px;line-height: 30rpx;padding-top: 7px;}
 .footer .index{border-right: 1rpx solid #bbbbbb;}
 .footer .index,.footer .collect{width: 14%;}
-.footer .buy-only,.footer .buy-group{width: 35%;color: #fff;}
+.footer .buy-only,.footer .buy-group{width: 70%;color: #fff;}
 .buy-only{background-color: #fe939d;}
 .buy-group{background-color: #fe0000;}
 

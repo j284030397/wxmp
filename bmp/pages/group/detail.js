@@ -3,6 +3,17 @@ var app = getApp();
 var date1 = new Date();
 var createTime = date1.getFullYear() + "-" + date1.getMonth() + "-" + date1.getDate();
 Page({
+  onShareAppMessage: function (res) {
+    console.log('11')
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '自定义转发标题',
+      path: '/pages/index/index?shopId=' + this.data.shopId
+    }
+  },
   data: {
     goodsNum:1,
     groupInfo:{
@@ -112,18 +123,18 @@ Page({
       })
     }, 1000)
   },
-  onShareAppMessage: function (options) {
-    console.log(options)
-    var path = '/pages/group/detail?id=' 
-    return {
-      title: 111,
-      path: path,
-      success: function (res) {
-        console.log(path)
-        console.log(res)
-      }
-    }
-  },
+  // onShareAppMessage: function (options) {
+  //   console.log(options)
+  //   var path = '/pages/group/detail?id=' 
+  //   return {
+  //     title: 111,
+  //     path: path,
+  //     success: function (res) {
+  //       console.log(path)
+  //       console.log(res)
+  //     }
+  //   }
+  // },
   showModal: function (e) {
     var showModalStatus = e.currentTarget.dataset.statu == 'open' ? true : false;
     app.showModal(this);

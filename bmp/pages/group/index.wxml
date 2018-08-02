@@ -20,25 +20,25 @@
 
 	<swiper-item>
 		<scroll-view scroll-y="true" class="scroll-view-y" scroll-with-animation="true" scroll-top="{{scrollTop}}" lower-threshold="50" bindscrolltolower="scrolltolower" style="height: {{windowHeight-36}}px;">
-			<template is="groupList" data="{{groupList:groupList,loading:loading}}"/>
+			<template is="groupList" data="{{groupList:groupList,loading:loading,rootPath:rootPath}}"/>
 		</scroll-view>
 	</swiper-item>
 
 	<swiper-item>
 		<scroll-view scroll-y="true" class="scroll-view-y" scroll-with-animation="true" scroll-top="{{scrollTop}}" lower-threshold="50" bindscrolltolower="scrolltolower" style="height: {{windowHeight-36}}px;">
-			<template is="groupList" data="{{groupList:groupList,loading:loading}}"/>
+			<template is="groupList" data="{{groupList:groupList,loading:loading,rootPath:rootPath}}"/>
 		</scroll-view>
 	</swiper-item>
 
 	<swiper-item>
 		<scroll-view scroll-y="true" class="scroll-view-y" scroll-with-animation="true" scroll-top="{{scrollTop}}" lower-threshold="50" bindscrolltolower="scrolltolower" style="height: {{windowHeight-36}}px;">
-			<template is="groupList" data="{{groupList:groupList,loading:loading}}"/>
+			<template is="groupList" data="{{groupList:groupList,loading:loading,rootPath:rootPath}}"/>
 		</scroll-view>
 	</swiper-item>
 
 	<swiper-item>
 		<scroll-view scroll-y="true" class="scroll-view-y" scroll-with-animation="true" scroll-top="{{scrollTop}}" lower-threshold="50" bindscrolltolower="scrolltolower" style="height: {{windowHeight-36}}px;">
-			<template is="groupList" data="{{groupList:groupList,loading:loading}}"/>
+			<template is="groupList" data="{{groupList:groupList,loading:loading,rootPath:rootPath}}"/>
 		</scroll-view>
 	</swiper-item>
 	

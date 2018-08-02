@@ -20,5 +20,31 @@
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle":"black",
     "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#AAAAAA",
+    "selectedColor": "#FF0000",
+    "backgroundColor": "#EEEEEE",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "resource/index.png",
+        "selectedIconPath": "resource/index-selected.png"
+      },
+      {
+        "pagePath": "pages/group/index",
+        "text": "我的团",
+        "iconPath": "resource/group.png",
+        "selectedIconPath": "resource/group-selected.png"
+      },
+      {
+        "pagePath": "pages/member/index",
+        "text": "个人中心",
+        "iconPath": "resource/member.png",
+        "selectedIconPath": "resource/member-selected.png"
+      }
+    ]
   }
 }

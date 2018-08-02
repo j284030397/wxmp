@@ -19,9 +19,8 @@ Page({
       userInfo: app.globalData.userInfo,
       hasUserInfo: true
     });
-    wx.navigateTo({
-      url: '../index/index'
-    })
+    wx.switchTab({      url: '../index/index'    });
+    //wx.redirectTo({ url: '../index/index'});
 
   },
   onLoad: function () {

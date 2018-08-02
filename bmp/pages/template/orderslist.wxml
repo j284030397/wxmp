@@ -1,20 +1,19 @@
 <!-- <import src="/pages/template/loading.wxml"/> -->
 <template name="ordersList">
 
-<!-- <view wx:if="{{ordersList.length>0}}" class="t"> -->
-<view class="t">
-<!-- <view wx:for="{{ordersList}}" wx:key="unique" class="order-group mt-10"> -->
-<view class="order-group mt-10">
-  	<view class="group-msg bg-fff pull-left">
-			<text class="order-num pull-left">订单编号：{{item.orderNum}}</text>
-  		<text class="pull-right order-status">{{item.orderStatus}}</text>
-  	</view>
+<view wx:if="{{ordersList.length>0}}" class="t"> 
 
-  	<view class="order-goods pull-left" bindtap="showOrderDetail" data-id="{{item.oid}}">
-			<view class="goods-img pull-left"><image src="{{item.img}}" mode="aspectFill"></image></view>
+ <view wx:for="{{ordersList}}" wx:key="unique" class="order-group mt-10"> 
+  	<view class="group-msg bg-fff pull-left">
+			<text class="order-num pull-left">订单编号：{{item.orderNo}}</text>
+  		<text class="pull-right order-status">{{item.statu}}</text>
+  	</view>
+    
+  	<view  wx:for="{{item.orderDetail}}"  class="order-goods pull-left" bindtap="showOrderDetail" data-id="{{item.oid}}">
+			<view class="goods-img pull-left"><image src="{{rootPath}}{{item.gimg}}" mode="aspectFill"></image></view>
 			<view class="goods-info pull-right">
-				<view class="goods-title pull-left">{{item.name}}</view>
-				<view class="goods-price pull-right">￥{{item.gprice}}</view>
+				<view class="goods-title pull-left">{{item.gname}}</view>
+				<view class="goods-price pull-right">￥{{item.tprice}}</view>
 				<view class="goods-prop pull-left">
 					<view wx:for="{{item.goodsProp}}" wx:key="unique" wx:for-item="prop" class="prop-item pull-left">
 					<view><text>{{prop.pname}}</text>:<text>{{prop.name}}</text></view>
@@ -48,8 +47,7 @@
 <template is="loading" data="{{loading:loading}}"/>
 
 </view>
-<!-- <view wx:else class="no-orders"> -->
- <view class="no-orders">
+ <view wx:else class="no-orders">
 	<view class="text-center">
 		<image src="/resource/no-orders.png"></image>
 		<view class="mt-20">您没有相关订单</view>

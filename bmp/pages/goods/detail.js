@@ -68,10 +68,7 @@ Page({
         'Authorization': 'Bearer ' + app.globalData.token
       },
       data: {
-        shopid: shopid,
-        goodsid: goodsid,
-        // searchPageNum: that.data.searchPageNum,
-        // callbackcount: that.data.callbackcount,
+  
       },
       success: function (res) {
         console.log(res);
@@ -129,7 +126,7 @@ Page({
       if(this.propValue &&(this.propValue.length==this.goodsInfo.property.length)){
         app.redirect('goods/payfor');
       }else{
-        app.showToast(this,'请选择商品属性')
+        //app.showToast(this,'请选择商品属性')
       }
     }else{
       app.redirect('goods/payfor');

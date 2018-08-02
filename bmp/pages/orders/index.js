@@ -5,8 +5,11 @@ Page( {
   currentTab: 0,
   scrollTop:0,
   page:0,
+  status: '',
+  totalCount: 1,
   ordersData:[],
-  loading:true
+  loading:true,
+  rootPath: app.globalData.serverPath
  }, 
  onLoad: function(options) {
   var current = options.id;
@@ -27,29 +30,41 @@ Page( {
     return false;
   }
   var self = this;
-  app.request.wxRequest({
-    url:'orders-list',
-    data:{sid:self.data.currentTab,page:self.data.page},
-    success:function(res){
-      if(!res){
-        self.data.loading = false
+
+  if (this.data.totalCount > 0 && this.data.page < this.data.totalCount) {
+    wx.request({
+      url: app.globalData.serverPath + '/mp/mpCustomOrder/' + app.globalData.userInfo.sid,
+      method: 'GET',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + app.globalData.token
+      },
+      data: {
+        status: this.data.status
+      },
+      success: function (res) {
+        if (!res) {
+          self.data.loading = false;
+          self.data.totalCount = res.data.data.total;
+          self.setData({
+            loading: false
+          })
+          var ordersData = self.data.ordersData
+        } else {
+          var ordersData = self.data.ordersData = self.data.ordersData.concat(res.data.data.result)
+        }
+        if (res.length < 4) {
+          self.setData({
+            loading: false
+          })
+        }
         self.setData({
-          loading:false
-        })
-        var ordersData = self.data.ordersData
-      }else{
-        var ordersData = self.data.ordersData = self.data.ordersData.concat(res)
-      }
-      if(res.length<4){
-        self.setData({
-          loading:false
+          ordersList: ordersData
         })
       }
-      self.setData({
-        ordersList:ordersData
-      })
-    }
-  })
+    })
+  }
+
  },
  toGroupDetail:function(e){
   var id = e.currentTarget.dataset.id;
@@ -116,6 +131,20 @@ Page( {
   this.data.ordersData=[]
   this.data.loading =true
   this.data.currentTab = e.detail.current
+  switch (e.detail.current) {
+    case 0: //全部
+      this.data.status = ''; break;
+    case 1://未支付
+      this.data.status = 0; break;
+    case 2: //待成团
+      this.data.status = 1; break;
+    case 3: // 待发货
+      this.data.status = 2; break;
+    case 4: // 待收货
+      this.data.status = 3; break;
+    default:
+      this.data.status = ''; break;
+  }
   this.setCurrentData()
   this.setData({
     loading:true,
@@ -128,12 +157,28 @@ Page( {
     if( this.data.currentTab == e.currentTarget.dataset.current ) return;
 
     this.data.currentTab = e.currentTarget.dataset.current
+    switch (e.currentTarget.dataset.current) {
+      case 0: //全部
+        this.data.status = ''; break;
+      case 1://未支付
+        this.data.status = 0; break;
+      case 2: //待成团
+        this.data.status = 1; break;
+      case 3: // 待发货
+        this.data.status = 2; break;
+      case 4: // 待收货
+        this.data.status = 3; break;
+      default:
+        this.data.status = ''; break;
+    }
     this.setData({
       currentTab: this.data.currentTab
     })
  },
  scrolltolower:function(){
-  ++this.data.page
+   if (this.data.totalCount != null && this.data.page < this.data.totalCount){
+     ++this.data.page
+   }
   this.setCurrentData()
  }
 })

@@ -16,6 +16,17 @@ Page({
     searchLoadingComplete: false,
     goodsId:'',
     shopId:'',
+    rootPath: app.globalData.serverPath
+  },
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '自定义转发标题',
+      path: '/pages/index/index?shopId='+this.data.shopId
+    }
   },
   // 下拉刷新回调接口
   onPullDownRefresh: function () {
@@ -34,10 +45,24 @@ Page({
     //app.redirect('goods/detail', 'gid=' + gid)
     wx.redirectTo({ url: '/pages/goods/detail?shopid=1&goodsid=' + goodsid})
   },
-  onLaunch: function () {
-    
+  onLaunch: function (options) {
+   
   },
-  onLoad: function () {
+  onLoad: function (options) {
+  
+    if (options.shopId==null){
+      console.log('options is null.');
+      this.setData({
+        shopId: app.globalData.userInfo.sid
+      })
+   }else{
+      this.setData({
+        shopId: options.shopId
+      })
+   }
+    console.log('options is null end.');
+    console.log(this.data.shopId);
+   
     this.getGoodsList();
   },
   click_b: function (options){
@@ -52,6 +77,7 @@ Page({
     console.log(e)
   },
   getGoodsList: function (fn) {
+
     let that = this;
     let shopId = 1;
     let orderType = 1;
@@ -61,19 +87,19 @@ Page({
     //console.log(app.globalData.serverPath)
     wx.request({
       method: 'GET',
-      url: app.globalData.serverPath + '/yzbGoodsInfo/listdata',
+      url: app.globalData.serverPath + '/mp/mpShopGoodsk/' + that.data.shopId,
       header: {
         'content-type': 'application/x-www-form-urlencoded',
         'Authorization': 'Bearer ' + app.globalData.token
       },
       data: {
-        shopId: shopId,
-        orderType: orderType,
-        customerId: customerId,
-        // status: status,
-        createTime: createTime,
-        searchPageNum: that.data.searchPageNum,
-        callbackcount: that.data.callbackcount,
+        // shopId: shopId,
+        // orderType: orderType,
+        // customerId: customerId,
+        // // status: status,
+        // createTime: createTime,
+        // searchPageNum: that.data.searchPageNum,
+        // callbackcount: that.data.callbackcount,
       },
       success: function (res) {
        // console.log(res);

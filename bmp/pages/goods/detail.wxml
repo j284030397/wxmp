@@ -21,7 +21,8 @@
 	</view>
 	<view class="icon-share text-center pull-right">
 		<image src='/resource/share.png'></image>
-		<view class="share-text">分享</view>
+		<!-- <view >分享</view> -->
+    <button class="share-text" open-type='share'>分享</button>
 	</view>
 	<button open-type="share" class="share-btn pull-right"></button>
 	<view class="clearfix"></view>
@@ -54,13 +55,10 @@
 		<view class="mt-10">收藏</view>
 	</view>
 	<view class="buy-group pull-right" bindtap="showModal" data-gprice="100" data-statu="open" data-type="group">
-		<view>¥100</view>
+		<view>¥{{mydata.tprice}}</view>
 		<view class="mt-10">一键开团</view>
 	</view>
-	<view class="buy-only pull-right" bindtap="showModal" data-price="200" data-statu="open" data-type="only">
-		<view>¥200</view>
-		<view class="mt-10">单独购买</view>
-	</view>
+
 </view>
 
 <view class="drawer_screen" bindtap="showModal" data-statu="close" wx:if="{{showModalStatus}}"></view>
@@ -107,5 +105,5 @@
 
 	</view>
 </view>
-<template is="toast" data="{{toast:toast}}"/>
+<!-- <template is="toast" data="{{toast:toast}}"/> -->
 
