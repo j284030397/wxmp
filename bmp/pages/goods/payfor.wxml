@@ -39,7 +39,7 @@
 </view>
 
 <view class="footer row">
-	<view class="">实付款：<text class="goods-price">¥{{mydata.tprice*goodsNum}}</text></view>
+	<view class="">实付款：<text class="goods-price">¥{{goodsPrice*goodsNum}}</text></view>
 	<view class="btn text-center " bindtap="goToPay">立即支付</view>
 </view>
 

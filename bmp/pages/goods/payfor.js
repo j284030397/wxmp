@@ -5,13 +5,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    goodsInfo: {
-      name:'欧莱雅恒放溢彩持色哑光遮瑕轻垫霜红胖子气垫持久不脱妆',
-      img: '/pages/images/1.jpg',
-      
+    goodsInfo: {   
     },
     goodsPrice:100,
-    goodsNum:1,
+    goodsNum:app.num,
     item: {
       name: 'S',
       pname: '大小',
@@ -35,7 +32,7 @@ Page({
       address: address,
       shopId: shopId,
       goodsId: goodsid,
-      goodsNum: num!=null?num:1,
+      goodsNum: app.num!=null?app.num:1,
     //  mydata: app.mydata,
     //  goodsNum: app.num,
       
@@ -158,24 +155,23 @@ Page({
   },
   goToPay: function () {
     //跳转
-    app.redirect('group/detail');
-    var self = this;
+   // app.redirect('group/detail');
+    var that = this;
     
     if (!this.data.address) {
       app.showToast(this, '请选择地址');
-      
       return false;
     }
     // JSON.stringify(jsonobj)
     var data = {
-      ptRuleId: 9,
+      ptRuleId: app.mydata.ruleId,
       goodsId: app.mydata.goodsId,
       shopId: app.shopId,
       customerId: 105,
       ptName: app.mydata.ptName,
-      address: JSON.stringify(this.data.address.detailInfo),
+      address: this.data.address.detailInfo,
       //totalPrice: app.mydata.goodsPrice * app.num,
-      linkMan: JSON.stringify(this.data.address.userName),
+      linkMan: this.data.address.userName,
       phone: JSON.stringify(this.data.address.telNumber),
       City: JSON.stringify(this.data.address.cityName),
     }
@@ -192,8 +188,17 @@ Page({
         'Authorization': 'Bearer ' + app.globalData.token
       },
       success: function (res) {
-        var oid = self.oid = res;
+        let mydata = res;
+        let orderNo = res.data.data.orderNo;
+        let tuanId = res.data.data.tuanId;
         console.log(res)
+        console.log(orderNo)
+
+        // if (data.isGroup == 1) { //拼团
+        app.redirect('group/detail', 'orderNo=' + orderNo + "&tuanId" + tuanId)
+        // } else {
+        //   app.redirect('orders/index', 'id=3')
+        // }
       }
     })
   },

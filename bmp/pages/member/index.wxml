@@ -87,4 +87,10 @@
 	<!-- <text class='pull-right'>></text>	 -->
 	<image src='/resource/left-b.png' class="pull-right"></image>
 	</navigator>
+  <navigator class="collect bg-fff" url="/pages/shop/regedit">
+	<view class="icon"><image src="/resource/collection.png"></image></view>
+	申请成为店主
+	<!-- <text class='pull-right'>></text>	 -->
+	<image src='/resource/left-b.png' class="pull-right"></image>
+	</navigator>
 
