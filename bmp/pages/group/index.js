@@ -9,6 +9,8 @@ Page({
     totalCount:1,
     groupData:[],
     loading:true,
+    shopReqUrl:'/mp/mpShopTuan/',
+    customReqUrl: '/mp/mpCustoTuan/',
     rootPath: app.globalData.serverPath
   },
   onLoad: function (options) {
@@ -22,14 +24,23 @@ Page({
     this.setCurrentData()
   },
   setCurrentData:function(){
+
+    console.log(this.data.totalCount);
+    console.log(this.data.page);
     if(!this.data.loading){
       return false
     }
     var self = this;
 
     if (this.data.totalCount > 0 && this.data.page < this.data.totalCount){
+      let urlStr='';
+      if(app.globalData.isShop){
+        urlStr = this.data.shopReqUrl;
+      }else{
+        urlStr = this.data.customReqUrl;
+      }
       wx.request({
-        url: app.globalData.serverPath + '/mp/mpCustoTuan/' + app.globalData.userInfo.sid,
+        url: app.globalData.serverPath + this.data.shopReqUrl+ app.globalData.userInfo.sid,
         method: 'GET',
         header: {
           'content-type': 'application/x-www-form-urlencoded',
@@ -51,6 +62,9 @@ Page({
             self.setData({
               loading: false
             })
+          }
+          if (self.data.totalCount != null && self.data.page < self.data.totalCount) {
+            ++self.data.page
           }
           var groupData = self.data.groupData = self.data.groupData.concat(res.data.data.result)
           self.setData({
@@ -127,8 +141,8 @@ Page({
   },
   scrolltolower:function(){
    if (this.data.totalCount != null && this.data.page < this.data.totalCount) {
-     ++this.data.page
+     this.setCurrentData();
    }
-   this.setCurrentData()
+
   }
 })

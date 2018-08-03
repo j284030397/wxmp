@@ -55,9 +55,9 @@
 		<image src="{{is_collect ? '/resource/collected.png':'/resource/collect.png'}}" mode="aspectFill"></image>
 		<view class="mt-10">收藏</view>
 	</view>
-	<view class="buy-group pull-right" bindtap="showModal" data-gprice="100" data-statu="open" data-type="group">
-		<view>¥{{mydata.tprice}}</view>
-		<view class="mt-10">一键开团</view>
+	<view class="buy-group pull-right" data-gprice="100" data-statu="open" data-type="group">
+		<view></view>
+		<view class="mt-20">分享给好友</view>
 	</view>
 
 </view>

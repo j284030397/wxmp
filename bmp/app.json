@@ -12,6 +12,7 @@
     "pages/member/info",
     "pages/member/collection",
     "pages/orders/detail",
+    "pages/shop/detail",
     "pages/logs/logs"
   ],
   "window":{

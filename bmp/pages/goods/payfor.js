@@ -17,6 +17,7 @@ Page({
       pname: '大小',
     },
     address: false,
+    rootPath: app.globalData.serverPath
 
   },
 
@@ -26,11 +27,20 @@ Page({
   onLoad: function (options) {
     //console.log(app.mydata.goodsId+app.num);
     var address = this.data.address = wx.getStorageSync('address')
+  
+    var shopId = options.shopid;
+    var goodsid = options.goodsid;
+    var num = options.num;
     this.setData({
       address: address,
-      mydata: app.mydata,
-      goodsNum: app.num,
-    })
+      shopId: shopId,
+      goodsId: goodsid,
+      goodsNum: num!=null?num:1,
+    //  mydata: app.mydata,
+    //  goodsNum: app.num,
+      
+    });
+    this.getGoodsById();
   },
   getWxAddress: function () {
     var self = this;
@@ -112,6 +122,38 @@ Page({
     var num = ++this.data.goodsNum
     this.setData({
       goodsNum: num
+    })
+  },
+  getGoodsById: function (fn) {
+    let that = this;
+    let shopId = that.data.shopId;
+    let goodsId = that.data.goodsId;
+    let customerId = '123';
+   
+    //let status = 0;
+    let createTime = '2018-07-16 15:44:53';
+    //console.log(app.globalData.serverPath)
+    wx.request({
+      method: 'GET',
+      url: app.globalData.serverPath + '/mp/mpShopGoodsById/' + shopId + '/' + goodsId,
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + app.globalData.token
+      },
+      data: {
+
+      },
+      success: function (res) {
+        console.log(res);
+        if (res.data.success == true) {
+          let data = res.data.data;
+          that.setData({
+            mydata: res.data.data.result
+          })
+          //console.log(that.data.mydata.descL);
+        }
+
+      }
     })
   },
   goToPay: function () {

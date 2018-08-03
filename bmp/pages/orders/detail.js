@@ -4,6 +4,9 @@ Page({
   onLoad: function (options) {
    this.oid = options.oid;
   },
+  data: {
+    rootPath: app.globalData.serverPath
+  }, 
   onShow:function(){
     this.showDataInfo()
   },

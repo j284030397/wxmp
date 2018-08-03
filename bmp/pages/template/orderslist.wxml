@@ -6,7 +6,8 @@
  <view wx:for="{{ordersList}}" wx:key="unique" class="order-group mt-10"> 
   	<view class="group-msg bg-fff pull-left">
 			<text class="order-num pull-left">订单编号：{{item.orderNo}}</text>
-  		<text class="pull-right order-status">{{item.statu}}</text>
+      	<text class="order-num pull-left">门店：{{item.shopName}}</text>
+  		<text class="pull-right order-status">{{item.Status}}</text>
   	</view>
     
   	<view  wx:for="{{item.orderDetail}}"  class="order-goods pull-left" bindtap="showOrderDetail" data-id="{{item.oid}}">
@@ -18,14 +19,14 @@
 					<view wx:for="{{item.goodsProp}}" wx:key="unique" wx:for-item="prop" class="prop-item pull-left">
 					<view><text>{{prop.pname}}</text>:<text>{{prop.name}}</text></view>
 					</view>
-					<view class="goods-num pull-right">x{{item.goodsNum}}</view>
+					<view class="goods-num pull-right">x{{item.num}}</view>
 				</view>
 			</view>
 		</view>
 		<view class="clearfix"></view>
 
 		<view class="order-price bg-fff pull-left">
-			实付：<text>¥{{item.totalPrice}}</text>
+			实付：<text>¥{{item.money}}</text>
 		</view>
 
 		<view class="user-option bg-fff clearfix">

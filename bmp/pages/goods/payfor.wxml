@@ -18,15 +18,16 @@
 </view>
 
 <view class="goods-item">
-	<image src="{{mydata.miImgUrl}}" mode="aspectFill"></image>
+	<image src="{{rootPath}}{{mydata.imgUrl}}" mode="aspectFill"></image>
 	<view class="goods-info pull-right">
 		<view class="goods-title">{{mydata.goodsName}}</view>
 		<view class="goods-property">
 			<view>
-				{{item.pname}}：{{item.name}}
+
+        {{mydata.goodsDes}}
 			</view>
 		</view>
-		<view class="goods-price">¥{{goodsPrice}}/件</view>
+		<view class="goods-price">¥{{mydata.tprice}}/件</view>
 	</view>
 	<view class="clearfix"></view>
 	<view class="buy-num row pull-left">
@@ -38,7 +39,7 @@
 </view>
 
 <view class="footer row">
-	<view class="">实付款：<text class="goods-price">¥{{goodsPrice*goodsNum}}</text></view>
+	<view class="">实付款：<text class="goods-price">¥{{mydata.tprice*goodsNum}}</text></view>
 	<view class="btn text-center " bindtap="goToPay">立即支付</view>
 </view>
 

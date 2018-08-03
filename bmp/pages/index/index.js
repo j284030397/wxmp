@@ -14,6 +14,7 @@ Page({
     callbackcount: 3,  
     searchLoading: false, 
     searchLoadingComplete: false,
+    isShop: app.globalData.isShop,
     goodsId:'',
     shopId:'',
     rootPath: app.globalData.serverPath
@@ -43,26 +44,28 @@ Page({
    // console.log(shopId),
     // if (!gid) return;
     //app.redirect('goods/detail', 'gid=' + gid)
-    wx.redirectTo({ url: '/pages/goods/detail?shopid=1&goodsid=' + goodsid})
+
+    if (app.globalData.isShop) {
+      wx.redirectTo({ url: '/pages/shop/detail?shopid=' + this.data.shopId + '&goodsid=' + goodsid })
+    }else{
+      wx.redirectTo({ url: '/pages/goods/detail?shopid=' + this.data.shopId + '&goodsid=' + goodsid })
+    }
+  
   },
   onLaunch: function (options) {
    
   },
   onLoad: function (options) {
-  
-    if (options.shopId==null){
-      console.log('options is null.');
+    if (app.globalData.isShop){
       this.setData({
-        shopId: app.globalData.userInfo.sid
+        shopId: app.globalData.userInfo.sid,
+        isShop: app.globalData.isShop
       })
-   }else{
+    }else{
       this.setData({
         shopId: options.shopId
       })
-   }
-    console.log('options is null end.');
-    console.log(this.data.shopId);
-   
+    }
     this.getGoodsList();
   },
   click_b: function (options){

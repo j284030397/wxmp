@@ -19,7 +19,10 @@
             <image src="{{val.avatarUrl}}" mode="" class="{{idx==1?'two':''}}"></image>
           </block>
           </view>
-          <view class="btn text-center">去开团 <image src="/pages/images/arrow_right.png"></image></view>
+            <view class="btn text-center" wx:if="{{isShop==true}}">
+           查看 <image src="/pages/images/arrow_right.png"></image></view>
+            <view class="btn text-center" wx:if="{{isShop==false}}">
+           去开团 <image src="/pages/images/arrow_right.png"></image></view>
           </view>
         </view>
       </view>

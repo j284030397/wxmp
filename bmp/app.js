@@ -10,6 +10,7 @@ App({
     encryptedData: '',
     secret: '',
     serverPath: 'https://www.xbang8.com/wxmp',
+    isShop:false
     // ptRuleId:'',
     // goodsId:'',
     // shopId:'',
@@ -122,6 +123,9 @@ App({
           that.globalData.openid = openid;
           that.globalData.token = res.data.data.userInfo.token;
           that.globalData.userInfo = res.data.data.userInfo;
+          if (res.data.data.userInfo.roles != null && res.data.data.userInfo.roles=='店长'){
+            that.globalData.isShop =true;
+          }
           let mydata = {
             token: that.globalData.token,
             userInfo: that.globalData.userInfo,

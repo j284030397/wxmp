@@ -9,6 +9,8 @@ Page( {
   totalCount: 1,
   ordersData:[],
   loading:true,
+  shopReqUrl: '/mp/mpShopOrder/',
+  customReqUrl: '/mp/mpCustomOrder/',
   rootPath: app.globalData.serverPath
  }, 
  onLoad: function(options) {
@@ -32,8 +34,15 @@ Page( {
   var self = this;
 
   if (this.data.totalCount > 0 && this.data.page < this.data.totalCount) {
+
+    let urlStr = '';
+    if (app.globalData.isShop) {
+      urlStr = this.data.shopReqUrl;
+    } else {
+      urlStr = this.data.customReqUrl;
+    }
     wx.request({
-      url: app.globalData.serverPath + '/mp/mpCustomOrder/' + app.globalData.userInfo.sid,
+      url: app.globalData.serverPath + urlStr + app.globalData.userInfo.sid,
       method: 'GET',
       header: {
         'content-type': 'application/x-www-form-urlencoded',
@@ -58,6 +67,11 @@ Page( {
             loading: false
           })
         }
+
+        if (self.data.totalCount != null && self.data.page < self.data.totalCount) {
+          ++self.data.page;
+        }
+      
         self.setData({
           ordersList: ordersData
         })
@@ -177,8 +191,8 @@ Page( {
  },
  scrolltolower:function(){
    if (this.data.totalCount != null && this.data.page < this.data.totalCount){
-     ++this.data.page
+     this.setCurrentData();
    }
-  this.setCurrentData()
+  
  }
 })
