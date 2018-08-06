@@ -25,7 +25,7 @@ Page({
       console.log(res.target)
     }
     return {
-      title: '自定义转发标题',
+      title: '你的好友' + app.globalData.userInfo.nickName+'邀请你拼团',
       path: '/pages/index/index?shopId='+this.data.shopId
     }
   },
@@ -44,6 +44,11 @@ Page({
    // console.log(shopId),
     // if (!gid) return;
     //app.redirect('goods/detail', 'gid=' + gid)
+//测试
+  // if(true){
+  //   wx.redirectTo({ url: '/pages/group/result?groupId=3' })
+  // }
+
 
     if (app.globalData.isShop) {
       wx.redirectTo({ url: '/pages/shop/detail?shopid=' + this.data.shopId + '&goodsid=' + goodsid })
@@ -63,7 +68,8 @@ Page({
       })
     }else{
       this.setData({
-        shopId: options.shopId
+       // shopId: options.shopId
+        shopId: 105
       })
     }
     this.getGoodsList();

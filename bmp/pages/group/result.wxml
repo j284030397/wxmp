@@ -13,10 +13,10 @@
 
 <view class="goods-item bg-fff">
 	<view class="pull-left g-left">
-		<text class="goods-price">¥{{mydata.tprice}}</text>
+		<text class="goods-price">¥{{mydata.ptPrice}}</text>
 		<text class="origin-price">¥{{mydata.price}}</text>
 		<view class="goods-sale">
-			已团{{mydata.total}}件·{{mydata.ptNum}}人团
+			已团{{mydata.total}}件·{{mydata.compleNum}}人团
 		</view>
     	<view class="goods-sale">{{mydata.shopName}}</view>
 	</view>
@@ -42,7 +42,7 @@
 
 <view class="goods-desc bg-fff"><view>商品详情</view></view>
 <view class="wxParse">
-	<template is="wxParse" data="{{wxParseData:mydata.descL}}"/>
+	<template is="wxParse" data="{{wxParseData:mydata.goodsDes}}"/>
 </view>
 </scroll-view>
 
@@ -56,8 +56,8 @@
 		<view class="mt-10">收藏</view>
 	</view>
 	<view class="buy-group pull-right" bindtap="showModal" data-gprice="100" data-statu="open" data-type="group">
-		<view>¥{{mydata.tprice}}</view>
-		<view class="mt-10">一键开团</view>
+		<view>¥{{mydata.ptPrice}}</view>
+		<view class="mt-10">立即参团</view>
 	</view>
 
 </view>

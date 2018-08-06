@@ -40,7 +40,7 @@ Page({
         urlStr = this.data.customReqUrl;
       }
       wx.request({
-        url: app.globalData.serverPath + this.data.shopReqUrl+ app.globalData.userInfo.sid,
+        url: app.globalData.serverPath + urlStr+ app.globalData.userInfo.sid,
         method: 'GET',
         header: {
           'content-type': 'application/x-www-form-urlencoded',

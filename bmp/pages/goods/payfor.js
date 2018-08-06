@@ -122,7 +122,7 @@ Page({
     })
   },
   getGoodsById: function (fn) {
-    let that = this;
+    var that = this;
     let shopId = that.data.shopId;
     let goodsId = that.data.goodsId;
     let customerId = '123';
@@ -146,7 +146,9 @@ Page({
           let data = res.data.data;
           that.setData({
             mydata: res.data.data.result
-          })
+          });
+          //console.log(that.data.mydata);
+
           //console.log(that.data.mydata.descL);
         }
 
@@ -157,19 +159,20 @@ Page({
     //跳转
    // app.redirect('group/detail');
     var that = this;
-    
+    console.log(that.mydata);
     if (!this.data.address) {
       app.showToast(this, '请选择地址');
       return false;
     }
     // JSON.stringify(jsonobj)
     var data = {
-      ptRuleId: app.mydata.ruleId,
-      goodsId: app.mydata.goodsId,
-      shopId: app.shopId,
-      customerId: 105,
-      ptName: app.mydata.ptName,
+      ptRuleId: that.data.mydata.ruleId,
+      goodsId: that.data.mydata.goodsId,
+      shopId: that.data.shopId,
+      customerId: app.globalData.userInfo.sid,
+      ptName: that.data.mydata.ptName,
       address: this.data.address.detailInfo,
+      num: this.data.goodsNum,
       //totalPrice: app.mydata.goodsPrice * app.num,
       linkMan: this.data.address.userName,
       phone: JSON.stringify(this.data.address.telNumber),
@@ -195,7 +198,10 @@ Page({
         console.log(orderNo)
 
         // if (data.isGroup == 1) { //拼团
-        app.redirect('group/detail', 'orderNo=' + orderNo + "&tuanId" + tuanId)
+       // app.redirect('group/detail', 'orderNo=' + orderNo + "&tuanId" + tuanId)
+        wx.navigateTo({
+          url: '/pages/group/detail?orderNo=' + orderNo + '&tuanId=' + tuanId
+        })
         // } else {
         //   app.redirect('orders/index', 'id=3')
         // }

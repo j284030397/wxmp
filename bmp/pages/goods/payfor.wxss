@@ -23,4 +23,4 @@
 .footer{background-color: #fff;position: fixed;bottom: 0;text-align: right;}
 .footer>view{display: inline-block;}
 .footer .goods-price{font-size: 43rpx;font-weight:bold;color: #fe0000;margin-left: 16rpx;margin-right: 32rpx;}
-.footer .btn{color: #fff;background-color: #fe0000;font-size: 34rpx;width: 240rpx;line-height: 100rpx;}
+.footer .btn{color: #fff;background-color: #fe0000;font-size: 34rpx;width: 240rpx;line-height: 101rpx;}

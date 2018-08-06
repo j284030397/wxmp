@@ -149,6 +149,8 @@ App({
           // }
 
 
+        }else{
+          that.toLogin();
         }
       }
 

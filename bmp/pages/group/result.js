@@ -30,25 +30,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
     var systemInfo = wx.getSystemInfoSync()
     if (app.globalData.isShop){
       this.setData({
         windowHeight: systemInfo.windowHeight,
-        goodsid: options.goodsid,
-        shopid: app.globalData.userInfo.sid,
         isShop:true
       })
     }else{
       this.setData({
         windowHeight: systemInfo.windowHeight,
-        goodsid: options.goodsid,
-        shopid: options.shopid
+        groupId:options.groupId
+
       })
     }
    
    // app.shopId= this.data.shopid;
    // console.log(app.shopId)
-    this.getGoodsById();
+    this.getGroupByTuanId();
   },
 
   /**
@@ -64,18 +63,11 @@ Page({
   onShow: function () {
   
   },
-  getGoodsById: function (fn) {
+  getGroupByTuanId: function (fn) {
     let that = this;
-    let shopid = that.data.shopid;
-    let goodsid = that.data.goodsid;
-    let customerId = '123';
-    console.log(goodsid);
-    //let status = 0;
-    let createTime = '2018-07-16 15:44:53';
-    //console.log(app.globalData.serverPath)
     wx.request({
       method: 'GET',
-      url: app.globalData.serverPath + '/mp/mpShopGoodsById/' +shopid+'/'+goodsid,
+      url: app.globalData.serverPath + '/mp/mpShopTuanDetail/' +this.data.groupId,
       header: {
         'content-type': 'application/x-www-form-urlencoded',
         'Authorization': 'Bearer ' + app.globalData.token
@@ -90,7 +82,6 @@ Page({
           that.setData({
             mydata: res.data.data.result
           })
-          //console.log(that.data.mydata.descL);
         }
 
       }
@@ -99,7 +90,7 @@ Page({
   showModal: function (e) {
     var type = e.currentTarget.dataset.type;
     var showModalStatus = e.currentTarget.dataset.statu == 'open' ? true : false;
-    var goodsPrice = this.goodsPrice = type == 'group' ? this.data.mydata.tprice : this.data.mydata.price;
+    var goodsPrice = this.goodsPrice = type == 'group' ? this.data.mydata.ptPrice : this.data.mydata.price;
     this.buyType = type == 'group' ? 1 : 0;
     app.showModal(this);
     this.setData({
@@ -132,33 +123,19 @@ Page({
     })
   },
   goToBuy:function(){
-    app.mydata = this.data.mydata; 
-    app.num=this.data.num;
+    console.log('111111111111111111');
+   
+   let num=this.data.num;
     let that = this;
-    let shopid = that.data.shopid;
-    let goodsid = that.data.goodsid;
-   // console.log(this.data.mydata.goodsId + app.goodsId);
-    if (this.data.mydata.goodsid){
-      if(this.propValue &&(this.propValue.length==this.goodsInfo.property.length)){
-        //app.redirect('goods/payfor');
-        let shopid = that.data.shopid;
-        let goodsid = that.data.goodsid;
-        let num = that.data.num;
-        // wx.redirectTo({
-        //   url: '/pages/goods/payfor?num=' + num+'&shopid=' + shopid + '&goodsid=' + goodsid })
-        wx.navigateTo({
-          url: '/pages/goods/payfor?num=' + num + '&shopid=' + shopid + '&goodsid=' + goodsid 
-        })
-      }else{
-        //app.showToast(this,'请选择商品属性')
-      }
-    }else{
-      //app.redirect('goods/payfor');
-      wx.navigateTo({
-        url: '/pages/goods/payfor?shopid=' + shopid + '&goodsid=' + goodsid
-      })
-     // wx.redirectTo({ url: '/pages/goods/payfor?shopid=' + shopid + '&goodsid=' + goodsid })
-    }
+    let shopid = that.data.mydata.shopId;
+    let goodsid = that.data.mydata.goodId;
+    console.log(shopid + goodsid);
+
+
+     wx.redirectTo({
+        url: '/pages/goods/payfor?shopid=' + shopid + '&goodsid=' + goodsid+'&num=' + num
+      });
+
   },
   /**
    * 生命周期函数--监听页面隐藏

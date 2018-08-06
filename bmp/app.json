@@ -13,6 +13,7 @@
     "pages/member/collection",
     "pages/orders/detail",
     "pages/shop/detail",
+    "pages/group/result",
     "pages/logs/logs"
   ],
   "window":{

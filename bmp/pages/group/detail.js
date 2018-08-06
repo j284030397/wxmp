@@ -10,26 +10,32 @@ Page({
       console.log(res.target)
     }
     return {
-      title: '自定义转发标题',
-      path: '/pages/index/index?shopId=' + this.data.shopId
+      title: '你的好友' + app.globalData.userInfo.nickName+'邀请你拼团',
+      path: '/pages/group/result?groupId=' + this.data.tuanId
     }
   },
   data: {
     goodsNum:1,
-    groupInfo:{
-      groupStatus:'拼团中',
-      isSelf:true,
-      name:'欧莱雅恒放溢彩持色哑光遮瑕轻垫霜红胖子气垫持久不脱妆',
-      img:'/pages/images/1.jpg',
-      oid:'10',
-      groupNum: '5' ,
-      saleNum: '54',
-      leftNum:'2',
-      gprice: '100',
-      createTime: createTime
-    },
+    // groupInfo:{
+    //   groupStatus:'拼团中',
+    //   isSelf:true,
+    //   name:'欧莱雅恒放溢彩持色哑光遮瑕轻垫霜红胖子气垫持久不脱妆',
+    //   img:'/pages/images/1.jpg',
+    //   oid:'10',
+    //   groupNum: '5' ,
+    //   saleNum: '54',
+    //   leftNum:'2',
+    //   gprice: '100',
+    //   createTime: createTime
+    // },
   },
   onLoad: function (options) {
+    this.setData({
+      tuanId: options.tuanId,
+      orderId: options.orderNo
+    })
+
+    this.getTuanInfo();
   },
   
   getWxAddress: function () {
@@ -140,6 +146,46 @@ Page({
     app.showModal(this);
     this.setData({
       showModalStatus: showModalStatus
+    })
+  },
+  getTuanInfo:function(){
+    var that=this;
+    wx.request({
+      url: app.globalData.serverPath + '/mp/mpShopTuanDetail/' + that.data.tuanId,
+      method: 'GET',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + app.globalData.token
+      },
+      data: {
+        status: this.data.status
+      },
+      success: function (res) {
+        console.log(res.data);
+        console.log(res.data.data.result.goodsName);
+        that.setData({
+          goodsNum: 1,
+          groupInfo:{
+
+           
+          
+              groupStatus: '拼团中',
+             isSelf:true,
+             name: res.data.data.result.goodsName,
+             img: app.globalData.serverPath + res.data.data.result.imgUrl,
+             oid:'10',
+              groupNum: '5',
+              saleNum: '54',
+              leftNum: '2',
+              gprice: res.data.data.result.ptPrice,
+              createTime: res.data.data.result.expiryDate
+        
+          }
+        })
+
+      
+        
+      }
     })
   }
 })
